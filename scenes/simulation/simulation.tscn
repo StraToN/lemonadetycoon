@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/simulation/simulation.gd" type="Script" id=1]
+[ext_resource path="res://scenes/simulation/consumer.gd" type="Script" id=2]
+
+[sub_resource type="Curve" id=1]
+
+min_value = 0.0
+max_value = 1.0
+bake_resolution = 100
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.328347, 0.4648 ), 3.17851, 3.17851, 0, 0, Vector2( 0.5, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.666116, 0.896 ), -1.53959, -1.53959, 0, 0, Vector2( 0.799008, 0.4912 ), -4.00768, -4.00768, 0, 0, Vector2( 0.904215, 0.148 ), -1.76584, -1.76584, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+
+min_value = 0.0
+max_value = 1.0
+bake_resolution = 100
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.200992, 0.0072 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.6408 ), -0.794627, 0.0, 0, 0, Vector2( 0.69, 0.192 ), -1.18698, -1.18698, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=3]
+
+min_value = 0.0
+max_value = 1.0
+bake_resolution = 100
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.148 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="simulation" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="consumers" type="Node" parent="."]
+
+[node name="hot" type="Node" parent="consumers"]
+script = ExtResource( 2 )
+day_consumption = SubResource( 1 )
+
+[node name="cloudy" type="Node" parent="consumers"]
+script = ExtResource( 2 )
+day_consumption = SubResource( 2 )
+
+[node name="rainy" type="Node" parent="consumers"]
+script = ExtResource( 2 )
+day_consumption = SubResource( 3 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
